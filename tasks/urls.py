@@ -5,8 +5,6 @@ from .views import task_list, add_task, delete_task, start_task, finish_task, re
 
 urlpatterns = [
     path('login/', auth_views.LoginView.as_view(), name='login'),
-    path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
-    path('', task_list, name='task_list'),
    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('task_list/', task_list, name='task_list'),
     path('add/', add_task, name='add_task'),
