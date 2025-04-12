@@ -20,6 +20,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('accounts/', include('django.contrib.auth.urls')),  # Включает маршруты для входа и выхода
-    path('', include('tasks.urls')),  # Ваши маршруты для приложения tasks
+    path('accounts/', include('django.contrib.auth.urls')),  
+    path('', include('tasks.urls')),  
 ]

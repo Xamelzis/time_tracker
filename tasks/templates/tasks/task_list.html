@@ -22,7 +22,11 @@
            </li>
        {% endfor %}
    </ul>
-   <a href="{% url 'logout' %}">Выйти</a>  <!-- Ссылка для выхода -->
+    <!-- Форма для выхода -->
+    <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit">Выйти</button>
+    </form>
 {% else %}
    <p>Пожалуйста, <a href="{% url 'login' %}">войдите</a> или <a href="{% url 'register' %}">зарегистрируйтесь</a>, чтобы увидеть ваши задачи.</p>
 {% endif %}
