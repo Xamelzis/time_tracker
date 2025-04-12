@@ -1,6 +1,5 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
-from .views import task_list, add_task, delete_task, start_task, finish_task, register  # Импортируйте необходимые представления
 from .views import task_list, add_task, delete_task, start_task, finish_task, register
 
 urlpatterns = [
