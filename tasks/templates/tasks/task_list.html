@@ -1,4 +1,4 @@
-<h2>Список задач</h2>
+<h2>Список задач для {{ user.username }}</h2>
 {% if user.is_authenticated %}
    <form method="post" action="{% url 'add_task' %}">
        {% csrf_token %}
@@ -11,7 +11,7 @@
            <li>
                {{ task.title }} 
                {% if task.started_at %} (Начато: {{ task.started_at }}) {% endif %}
-               {% if task.finished_at %} (Завершено: {{ task.finished_at }}, Время: {{ task.duration }} мин) {% endif %}
+               {% if task.finished_at %} (Завершено: {{ task.finished_at }}, Время: {{ task.duration }}) {% endif %}
                <a href="{% url 'delete_task' task.id %}">Удалить</a>
                {% if not task.started_at %}
                    <a href="{% url 'start_task' task.id %}">Начать</a>
