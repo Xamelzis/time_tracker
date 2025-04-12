@@ -1,0 +1,28 @@
+<h2>Список задач</h2>
+{% if user.is_authenticated %}
+   <form method="post" action="{% url 'add_task' %}">
+       {% csrf_token %}
+       <input type="text" name="title" placeholder="Название задачи" required>
+       <button type="submit">Добавить задачу</button>
+   </form>
+
+   <ul>
+       {% for task in user.task_set.all %}
+           <li>
+               {{ task.title }} 
+               {% if task.started_at %} (Начато: {{ task.started_at }}) {% endif %}
+               {% if task.finished_at %} (Завершено: {{ task.finished_at }}, Время: {{ task.duration }} мин) {% endif %}
+               <a href="{% url 'delete_task' task.id %}">Удалить</a>
+               {% if not task.started_at %}
+                   <a href="{% url 'start_task' task.id %}">Начать</a>
+               {% endif %}
+               {% if task.started_at and not task.finished_at %}
+                   <a href="{% url 'finish_task' task.id %}">Завершить</a>
+               {% endif %}
+           </li>
+       {% endfor %}
+   </ul>
+   <a href="{% url 'logout' %}">Выйти</a>  <!-- Ссылка для выхода -->
+{% else %}
+   <p>Пожалуйста, <a href="{% url 'login' %}">войдите</a> или <a href="{% url 'register' %}">зарегистрируйтесь</a>, чтобы увидеть ваши задачи.</p>
+{% endif %}
