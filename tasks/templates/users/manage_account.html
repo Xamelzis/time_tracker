@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Управление аккаунтом {{ user.username }}</title>
+</head>
+<body>
+    <h2>Управление аккаунтом {{ user.username }}</h2>
+    <form method="post" action="{% url 'change_password' user.id %}">
+        {% csrf_token %}
+        <label for="new_password">Новый пароль:</label>
+        <input type="password" id="new_password" name="new_password" required>
+        <button type="submit">Изменить пароль</button>
+    </form>
+    <form method="post" action="{% url 'delete_user' user.id %}">
+        {% csrf_token %}
+        <button type="submit">Удалить аккаунт</button>
+    </form>
+</body>
+</html>
