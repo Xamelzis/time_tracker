@@ -36,7 +36,19 @@ def delete_task(request, task_id):
     task = Task.objects.get(id=task_id, user=request.user)
     task.delete()
     return redirect('task_list')
-    
+
+@login_required
+def delete_task_admin(request, task_id):
+    try:
+        task = Task.objects.get(id=task_id)  # Получаем задачу по ID
+        task_user_id = task.user.id  # Получаем ID пользователя, которому принадлежит задача
+        task.delete()  # Удаляем задачу
+        messages.success(request, 'Задача успешно удалена.')  # Уведомление об успешном удалении
+    except Task.DoesNotExist:
+        messages.error(request, 'Задача не найдена.')  # Уведомление об ошибке, если задача не найдена
+        return redirect('task_list')  # Перенаправляем на страницу задач, если задача не найдена
+
+    return redirect('user_task_list', user_id=task_user_id)  # Перенаправляем на страницу задач пользователя
    
 @login_required
 def start_task(request, task_id):
