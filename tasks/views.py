@@ -151,7 +151,17 @@ def user_tasks(request, user_id):
     })
 
 # Управление аккаунтом пользователя
-@login_required
+# Декоратор для проверки, является ли пользователь администратором
+def admin_required(function):
+    def wrap(request, *args, **kwargs):
+        if request.user.is_staff:
+            return function(request, *args, **kwargs)
+        else:
+            messages.error(request, 'У вас нет доступа к этой странице.')
+            return redirect('task_list')  # Перенаправление на список задач
+    return wrap
+
+@admin_required
 def manage_account(request, user_id):
     user = get_object_or_404(User, id=user_id)
 
