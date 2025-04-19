@@ -7,6 +7,12 @@ from django.contrib import messages
 from django.utils import timezone
 from .models import Task, CategoryTime, CategoryActivity
 
+def home(request):
+    if request.user.is_authenticated:
+        return redirect('task_list')  # Перенаправление на /task_list для авторизованных пользователей
+    else:
+        return redirect('login')  # Перенаправление на /login для неавторизованных пользователей
+        
 # Список задач для текущего пользователя
 @login_required
 def task_list(request):
