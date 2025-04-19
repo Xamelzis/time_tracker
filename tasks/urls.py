@@ -1,7 +1,8 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
+from django.views.generic import RedirectView
 from .views import task_list, add_task, delete_task, start_task, finish_task, register,add_task_admin
-from .views import users_list, user_tasks, manage_account, delete_task_admin
+from .views import users_list, user_tasks, manage_account, delete_task_admin,delete_user,change_password
 
 urlpatterns = [
     path('login/', auth_views.LoginView.as_view(), name='login'),
@@ -18,4 +19,7 @@ urlpatterns = [
     path('users/<int:user_id>/tasks/add/', add_task_admin, name='add_task_admin'),  # Для добавления задачи
     path('task_list/', task_list, name='task_list'),  # Для просмотра задач текущего пользователя
     path('tasks/add/', add_task, name='add_task'),
+    path('users/<int:user_id>/change_password/', change_password, name='change_password'),
+    path('users/<int:user_id>/delete/', delete_user, name='delete_user'),
+    path('', RedirectView.as_view(url='/login/', permanent=False)),
 ]

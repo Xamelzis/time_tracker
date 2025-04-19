@@ -3,6 +3,23 @@
    <form method="post" action="{% url 'add_task_admin' user.id %}">
        {% csrf_token %}
        <input type="text" name="title" placeholder="Название задачи" required>
+       
+       <!-- Выпадающий список для категорий времени -->
+       <select name="category_time" required>
+           <option value="" disabled selected>Выберите категорию времени</option>
+           {% for category in category_times %}
+               <option value="{{ category.id }}">{{ category.name }}</option>
+           {% endfor %}
+       </select>
+       
+       <!-- Выпадающий список для категорий активностей -->
+       <select name="category_activity" required>
+           <option value="" disabled selected>Выберите категорию активности</option>
+           {% for category in category_activities %}
+               <option value="{{ category.id }}">{{ category.name }}</option>
+           {% endfor %}
+       </select>
+       
        <button type="submit">Добавить задачу</button>
    </form>
 
@@ -11,14 +28,10 @@
            <li>
                {{ task.title }} 
                {% if task.started_at %} (Начато: {{ task.started_at }}) {% endif %}
-               {% if task.finished_at %} (Завершено: {{ task.finished_at }}, Время: {{ task.duration }}) {% endif %}
+            {% if task.finished_at %} (Завершено: {{ task.finished_at }}, Время: {{ task.duration }}) {% endif %}
+            {% if task.category_time %} (Категория времени: {{ task.category_time.name }}) {% endif %}
+            {% if task.category_activity %} (Категория активности: {{ task.category_activity.name }}) {% endif %}
                <a href="{% url 'delete_task_admin' task.id %}">Удалить</a>
-               {% if not task.started_at %}
-                   <a href="{% url 'start_task' task.id %}">Начать</a>
-               {% endif %}
-               {% if task.started_at and not task.finished_at %}
-                   <a href="{% url 'finish_task' task.id %}">Завершить</a>
-               {% endif %}
            </li>
        {% endfor %}
    </ul>
